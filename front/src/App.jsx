@@ -1,4 +1,16 @@
 export default function App() {
+  // A basic test to see if we can get data from the back
+  async function testBack() {
+    console.log("Testing back...");
+    const response = await fetch("/api/data");
+    const data = await response.json();
+    console.log("Got Data!", data);
+  }
+
+  testBack();
+
+
+
   return (
     <div>
       <h1>¡Hola mundo!</h1>
