@@ -6,6 +6,7 @@
   "author": "John Alexis Guerra Gomez",
   "license": "MIT",
   "scripts": {
+    "preinstall": "cd front && npm install && npm run build",
     "start": "node ./node_modules/nodemon/bin/nodemon.js ./bin/www.js",
     "initDB": "mongoimport -d photoSharing -c photos --jsonArray db/initialPhotoSharingData.json"
   },
