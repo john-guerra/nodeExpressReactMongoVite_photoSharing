@@ -6,14 +6,12 @@
 
 import app from "../app.js";
 import debugModule from "debug";
-
 import http from "http";
-
 const debug = debugModule("miniphotosharing:server");
+
 /**
  * Get port from environment and store in Express.
  */
-
 let port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
@@ -84,5 +82,5 @@ function onError(error) {
 function onListening() {
   let addr = server.address();
   let bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
+  debug("Listening on " + bind + " on " + port);
 }
