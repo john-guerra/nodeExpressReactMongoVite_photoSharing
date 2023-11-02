@@ -9,6 +9,10 @@ Clone the repository and then do:
 
 ```
 npm install
+cd front
+npm install
+npm run build
+cd ..
 npm start
 ```
 Which will start the backend server, running on http://localhost:3000. 
