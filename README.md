@@ -21,6 +21,11 @@ This application assumes that you have a Mongo server running on localhost:27017
 
 ## Frontend
 
-The express application will serve the compiled react application hosted on [./front](./front) folder. If you want to recompile it just run `npm run build` on the font folder. You can also start a secondary development server for the front end using `npm run dev` on the [./front](./front)  folder courtesy of vite, which will serve the front via http://localhost:5173
+The express application will serve the compiled react application hosted on [./front](./front) folder. If you want to recompile it just run 
+
+```npm install
+npm run build``` 
+
+on the font folder. You can also start a secondary development server for the front end using `npm run dev` on the [./front](./front)  folder courtesy of vite, which will serve the front via http://localhost:5173
 
 
