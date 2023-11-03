@@ -5,60 +5,34 @@ import { ButtonVote } from "./components/ButtonVote";
 import { PhotosGallery } from "./components/PhotosGallery";
 import { useState, useEffect } from "react";
 
-function SearchBar() {
-  // const [query, setQuery] = useState("");
-  let query = "";
-
-  function onInput(evt) {
-    console.log("SearchBar onInput", evt.target.value);
-    // setQuery(evt.target.value);
-
-    query = evt.target.value;
-  }
-
-  return (
-    <div>
-      Search <input className="input-control" type="text" onInput={onInput} />
-    </div>
-  );
-}
-
-function RangeWidth() {
-  let [width, setWidth] = useState(10);
-
-  function onInput(evt) {
-    setWidth(+evt.target.value);
-    
-  }
-
-  return (
-    <label>
-      <input type="range" value={width} min="40" max="300" onInput={onInput} />
-      <output> Value: {width} </output>
-    </label>
-  );
-}
+import { RangeWidth } from "./components/RangeWidth";
+import { SearchBar } from "./components/SearchBar";
 
 export default function App() {
-  let [photos, setPhotos] = useState([]);
+  const [query, setQuery] = useState("");
+  const [photos, setPhotos] = useState([]);
 
-  // A basic test to see if we can get data from the back
-  async function testBack() {
-    console.log("Testing back...");
-    const response = await fetch("/api/photos");
-    const data = await response.json();
-    console.log("Got Data!", data);
+  // setup an effect that fetches photos exactly once (empty array as secondary argument)
+  useEffect(() => {
+    async function fetchPhotos() {
+      console.log("⭐️Fecthing photos...");
+      const response = await fetch(`/api/photos?query=${query}`);
+      if (!response.ok) {
+        // TODO: handle error
+        console.log("Error fetching photos", response);
+        return;
+      }
+      const _photos = await response.json();
+  
+      console.log("🤙🏼 Got photos", _photos);
+  
+      setPhotos(_photos.photos);
+    }
 
-    setPhotos(data.photos);
-  }
+    fetchPhotos();
+  }, [query]);
 
-  useEffect(
-    () => {
-      testBack();
-    },
-    [] // This is the dependency array. It is empty, so it will only run once.
-  );
-  console.log("Render App photos=", photos);
+  
 
   return (
     <div>
@@ -66,8 +40,14 @@ export default function App() {
       <h1>Photo Sharing Application</h1>
 
       <RangeWidth />
-      <SearchBar />
-      <PhotosGallery photos={photos.slice(0, 20)} />
+      <SearchBar query={query} setQuery={setQuery} />
+      <PhotosGallery
+        photos={photos
+          // .filter((d) => d.caption.includes(query))// front end filtering
+          .slice(0, 20)}
+      >
+        
+      </PhotosGallery>
 
       <ButtonVote name="John" />
       <ButtonVote name="Chuanzhao" />

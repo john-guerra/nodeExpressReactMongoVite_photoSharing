@@ -1,40 +1,39 @@
 import PropTypes from "prop-types";
 
-export function PhotosGallery({photos}) {
-  function renderPhoto(d, i) {
+export function PhotosGallery({ photos }) {
+
+
+  console.log("👏🏻 Render PhotosGallery photos=", photos);
+
+  function renderPhotos() {
+    function renderPhoto(photo, i) {
+      return (
+        <div className="col-4" key={photo._id}>
+          <img src={photo.url} alt={photo.caption} />
+          <div>{photo.caption}</div>
+          <div>{photo.owner}</div>
+          <div>{photo.timestamp}</div>
+        </div>
+      );
+    }
+
     return (
-      <div key={`photos_${i}`}>
-        <img src={d.url} alt={d.caption} />
-        <div>{d.caption}</div>
-        <div>{d.owner}</div>
-        <div>{d.timestamp}</div>
-      </div>
+      photos
+        .map(renderPhoto)
     );
   }
 
-  function renderPhotos() {
-    return <div>{photos.map(renderPhoto)}</div>;
-  }
-
-  console.log("Render Photos Gallery photos=", photos);
-  return (
-    <div className="PhotosGallery">
-      {" "}
-      <h2>Photos</h2>
-      <div>{renderPhotos()}</div>
-    </div>
-  );
+  return <div className="row">{renderPhotos()}</div>;
 }
-
 
 PhotosGallery.propTypes = {
   photos: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
       caption: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
       owner: PropTypes.string.isRequired,
       timestamp: PropTypes.string.isRequired,
     })
-  ).isRequired,
-}
+  )
+};
