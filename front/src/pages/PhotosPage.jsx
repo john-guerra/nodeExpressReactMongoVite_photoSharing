@@ -6,23 +6,23 @@ import { useState, useEffect } from "react";
 import { RangeWidth } from "../components/RangeWidth";
 import { SearchBar } from "../components/SearchBar";
 
-import BasePage, { ErrorContext } from "./BasePage";
+import BasePage from "./BasePage";
 
-import "./PhotosPage.css";
+import { ErrorContext } from "../main";
 
 export default function PhotosPage() {
-  const setError = useContext(ErrorContext);
-
-
+  const { setError } = useContext(ErrorContext);
 
   const [query, setQuery] = useState("");
   const [photos, setPhotos] = useState([]);
 
   // setup an effect that fetches photos exactly once (empty array as secondary argument)
   useEffect(() => {
+    
+
     async function fetchPhotos() {
       console.log("⭐️Fecthing photos...");
-      const response = await fetch(`/api/photo?query=${query}`);
+      const response = await fetch(`/api/photos?query=${query}`);
       if (!response.ok) {
         // TODO: handle error
         console.log("Error fetching photos", response);
@@ -36,10 +36,11 @@ export default function PhotosPage() {
       console.log("🤙🏼 Got photos", _photos);
 
       setPhotos(_photos.photos);
+      setError({ msg: "", type: "" });
     }
 
     fetchPhotos();
-  }, [query]);
+  }, [query, setError]);
 
   return (
     <BasePage>
