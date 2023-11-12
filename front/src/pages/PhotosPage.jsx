@@ -5,21 +5,20 @@ import { useState, useEffect } from "react";
 
 import { RangeWidth } from "../components/RangeWidth";
 import { SearchBar } from "../components/SearchBar";
-
 import BasePage from "./BasePage";
-
 import { ErrorContext } from "../main";
+import { useGetUser } from "../hooks/useGetUser";
 
 export default function PhotosPage() {
   const { setError } = useContext(ErrorContext);
+
+  const { user } = useGetUser();
 
   const [query, setQuery] = useState("");
   const [photos, setPhotos] = useState([]);
 
   // setup an effect that fetches photos exactly once (empty array as secondary argument)
   useEffect(() => {
-    
-
     async function fetchPhotos() {
       console.log("⭐️Fecthing photos...");
       const response = await fetch(`/api/photos?query=${query}`);
@@ -40,23 +39,29 @@ export default function PhotosPage() {
     }
 
     fetchPhotos();
-  }, [query, setError]);
+  }, [user, query, setError]);
 
   return (
     <BasePage>
       <h1>Photo Sharing Application</h1>
 
-      <RangeWidth />
+      {user ? (
+        <>
+          <RangeWidth />
 
-      <SearchBar query={query} setQuery={setQuery} />
-      <PhotosGallery
-        photos={photos
-          // .filter((d) => d.caption.includes(query))// front end filtering
-          .slice(0, 20)}
-      ></PhotosGallery>
+          <SearchBar query={query} setQuery={setQuery} />
+          <PhotosGallery
+            photos={photos
+              // .filter((d) => d.caption.includes(query))// front end filtering
+              .slice(0, 20)}
+          ></PhotosGallery>
 
-      <ButtonVote name="John" />
-      <ButtonVote name="Chuanzhao" />
+          <ButtonVote name="John" />
+          <ButtonVote name="Chuanzhao" />
+        </>
+      ) : (
+        <div>Not logged in</div>
+      )}
     </BasePage>
   );
 }

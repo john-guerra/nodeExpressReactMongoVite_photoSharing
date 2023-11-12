@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import PhotosPage from "./pages/PhotosPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 import "./index.css";
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
     path: "/about",
     element: <AboutPage />,
   },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  }
 ]);
 
 export const ErrorContext = createContext(null);

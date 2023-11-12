@@ -6,7 +6,7 @@ export function PhotosGallery({ photos }) {
   console.log("👏🏻 Render PhotosGallery photos=", photos);
 
   function renderPhotos() {
-    function renderPhoto(photo, i) {
+    function renderPhoto(photo) {
       return (
         <div className="col-4" key={photo._id}>
           <img src={photo.url} alt={photo.caption} />

@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { LoginLink } from "../components/LoginLink.jsx";
+
 
 export function AppNavBar() {
   return (
@@ -29,6 +31,10 @@ export function AppNavBar() {
               <Link className="nav-link" to="/about">
                 About
               </Link>
+            </li>
+
+            <li className="nav-item">
+              <LoginLink />
             </li>
           </ul>
         </div>
